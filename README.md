@@ -28,10 +28,9 @@ computed on it.
 
 ## c. GitHub repository link
 
-<!-- TODO: paste your repository URL -->
-`https://github.com/<your-username>/<your-repo>`
+`https://github.com/SidharthKBurnwal/mobile_price_app/tree/main`
 
-Live app: <!-- TODO: paste Streamlit Community Cloud URL -->
+Live app: `https://mobilepriceapp-mnrnq7pceh3nxjccq3yiwe.streamlit.app/`
 
 Repository layout:
 
@@ -65,8 +64,6 @@ Decision Tree `max_depth=12, min_samples_leaf=5`; KNN `k=21, weights=distance`; 
 `var_smoothing=1e-9`; SVM `kernel=linear, C=10`.
 
 ### Observations
-
-<!-- Draft based on the real numbers above. Reword in your own words before submitting. -->
 
 | ML Model Name | Observation about model performance |
 | --- | --- |
