@@ -1,5 +1,8 @@
 streamlit
-scikit-learn==1.6.1
+# 1.6.1 has wheels for Python <= 3.13 (local / BITS venv). On Streamlit Cloud (often 3.14),
+# pip would compile 1.6.1 from source for 30+ min — use 1.7.2+ which ships cp314 wheels.
+scikit-learn==1.6.1; python_version < "3.14"
+scikit-learn==1.7.2; python_version >= "3.14"
 numpy
 pandas
 matplotlib
