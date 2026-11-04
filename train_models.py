@@ -9,6 +9,7 @@ Outputs: model/*.joblib   (five fitted pipelines: scaler + classifier)
          model/metrics.csv (comparison table used in the README)
 """
 import sys
+import warnings
 
 import joblib
 import pandas as pd
@@ -72,6 +73,13 @@ def build_models():
 
 
 def main():
+    warnings.filterwarnings(
+        "ignore",
+        category=RuntimeWarning,
+        message=".*encountered in matmul.*",
+        module=r"sklearn\..*",
+    )
+
     df = load_data()
     X, y = df[FEATURES], df[TARGET]
     X_train, X_test, y_train, y_test = train_test_split(
@@ -86,7 +94,7 @@ def main():
     cv = StratifiedKFold(n_splits=5, shuffle=True, random_state=SEED)
     rows = []
     for name, (pipe, grid) in build_models().items():
-        search = GridSearchCV(pipe, grid, cv=cv, scoring="accuracy", n_jobs=-1)
+        search = GridSearchCV(pipe, grid, cv=cv, scoring="accuracy", n_jobs=1)
         search.fit(X_train, y_train)          # fit on TRAIN split only
         best = search.best_estimator_
         joblib.dump(best, MODEL_DIR / MODEL_FILES[name])
