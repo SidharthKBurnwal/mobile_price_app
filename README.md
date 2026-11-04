@@ -85,3 +85,22 @@ streamlit run app.py        # opens the app
 The app lets you upload a test CSV (it must contain the 20 feature columns plus
 `price_range`), choose a model from a dropdown, and view the six metrics, the confusion
 matrix, the classification report, and a side-by-side table of all five models.
+
+## Streamlit Community Cloud (if the app stays on “Your app is in the oven”)
+
+Streamlit Cloud **does not read `runtime.txt`**. The build log shows the Python version
+actually used (for example `Using CPython 3.14.10`). On Python 3.14 there is often **no
+pre-built wheel for `scikit-learn==1.6.1`**, so the log shows `Building scikit-learn==1.6.1`
+and the deploy can hang or fail for a long time.
+
+**Fix:**
+
+1. Delete the current Cloud app (or create a fresh deploy).
+2. Deploy again from this repo, branch `main`, main file `app.py`.
+3. Open **Advanced settings** → **Python version** → choose **3.11** or **3.12** (not 3.14).
+4. Save and deploy. The log should show `Using CPython 3.11.x` or `3.12.x` and **download**
+   wheels for `scikit-learn`, not `Building scikit-learn`.
+
+You cannot change Python on an existing app without deleting and redeploying. The saved
+`.joblib` models in `model/` are already in the repo; the Cloud app only loads them (no
+retraining on deploy).

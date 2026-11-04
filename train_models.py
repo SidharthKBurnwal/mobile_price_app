@@ -9,7 +9,6 @@ Outputs: model/*.joblib   (five fitted pipelines: scaler + classifier)
          model/metrics.csv (comparison table used in the README)
 """
 import sys
-import warnings
 
 import joblib
 import pandas as pd
@@ -73,13 +72,6 @@ def build_models():
 
 
 def main():
-    warnings.filterwarnings(
-        "ignore",
-        category=RuntimeWarning,
-        message=".*encountered in matmul.*",
-        module=r"sklearn\..*",
-    )
-
     df = load_data()
     X, y = df[FEATURES], df[TARGET]
     X_train, X_test, y_train, y_test = train_test_split(
