@@ -4,6 +4,7 @@ Used by both train_models.py (training) and app.py (evaluation only), so the
 column order and the way metrics are computed can never drift apart.
 """
 from pathlib import Path
+import warnings
 
 import numpy as np
 from sklearn.metrics import (
@@ -13,6 +14,19 @@ from sklearn.metrics import (
     precision_score,
     recall_score,
     roc_auc_score,
+)
+
+warnings.filterwarnings(
+    "ignore",
+    category=RuntimeWarning,
+    message=".*encountered in matmul.*",
+    module=r"sklearn\..*",
+)
+warnings.filterwarnings(
+    "ignore",
+    category=FutureWarning,
+    message=".*`probability` parameter was deprecated.*",
+    module=r"sklearn\.svm\._base",
 )
 
 ROOT = Path(__file__).resolve().parent
